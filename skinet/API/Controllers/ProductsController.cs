@@ -1,5 +1,5 @@
-using API.Data;
-using API.Entities;
+using Core.Entities;
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,30 +9,25 @@ namespace API.Controllers;
 [Route("api/[controller]/")]
 public class ProductsController: ControllerBase
 {
-    private readonly StoreContext _storeContext;
-    public ProductsController(StoreContext storeContext)
+    private readonly ProductRepository _productRepository;
+
+    public ProductsController(ProductRepository productRepository)
     {
-        _storeContext = storeContext;
+        _productRepository = productRepository;
     }
 
 
     [HttpGet("[action]")]
     public async  Task<ActionResult<List<Product>>> GetProducts()
     {
-        var products = await _storeContext.Products.ToListAsync();
+        var products = await _productRepository.GetProductsAsync();
         
-        return products; 
+        return Ok(products); 
     }
 
     [HttpGet("[action]/{id}")]
     public async Task<ActionResult<Product>> GetProduct(Guid id)
     {
-        var product = await _storeContext.Products.FindAsync(id);
-        if (product == null)
-        {
-            return NotFound();
-        }
-
-        return product;
+        return await _productRepository.GetProductByIdAsync(id);
     }
 }
