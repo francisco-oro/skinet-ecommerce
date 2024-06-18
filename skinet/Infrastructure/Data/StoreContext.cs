@@ -14,7 +14,9 @@ public class StoreContext : DbContext
     public DbSet<ProductBrand> ProductBrands { get; set; }
     public DbSet<ProductType> ProductTypes { get; set; }
     public DbSet<Category> Categories { get; set; }
-
+    public DbSet<Colors> Colors { get; set; }
+    public DbSet<Size> Sizes { get; set; }
+    public DbSet<Tag> Tags { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

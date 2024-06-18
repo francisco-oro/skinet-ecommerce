@@ -14,14 +14,14 @@
     "Price": 5
   },
   {
-    "Id": "3",
-    "ShortName": "199e8a17-023b-4a3b-8e58-9d5efa25769e",
+    "Id": "199e8a17-023b-4a3b-8e58-9d5efa25769e",
+    "ShortName": "UPS3",
     "Description": "Slower but cheap",
     "DeliveryTime": "5-10 Days",
     "Price": 2
   },
   {
-    "Id": "12b8b324-d859-42a0-97e9-37290a4e261c",
+    "Id": "199e8a17-023b-4a3b-8e58-9d5efa25769e",
     "ShortName": "FREE",
     "Description": "Free! You get what you pay for",
     "DeliveryTime": "1-2 Weeks",
