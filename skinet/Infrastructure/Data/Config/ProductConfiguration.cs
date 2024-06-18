@@ -1,6 +1,5 @@
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Data.Config;
@@ -20,6 +19,11 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .HasForeignKey(p => p.ProductTypeId);
         builder.HasOne(p => p.Category).WithMany()
             .HasForeignKey(p => p.CategoryId);
-        builder.HasMany(p => p.ProductTag).WithMany()
+        builder.HasMany(p => p.Tags)
+            .WithMany(tag => tag.Products);
+        builder.HasMany(p => p.Colors)
+            .WithMany(color => color.Products);
+        builder.HasMany(p => p.Sizes)
+            .WithMany(size => size.Products);
     }
 }

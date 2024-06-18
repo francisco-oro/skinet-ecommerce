@@ -17,6 +17,8 @@ public class Product : BaseEntity
     public Guid ProductTypeId { get; set; }
     public ProductBrand ProductBrand { get; set; }
     public Guid ProductBrandId { get; set; }
-    public List<ProductTag> ProductTags { get; set; } = [];
-    public List<Tag> Tags { get; set; } = [];
+    public virtual ICollection<Tag> Tags { get; set; } = [];
+    public virtual ICollection<Color> Colors { get; set; } = [];
+    public virtual ICollection<Size> Sizes { get; set; } = [];
 }
+

@@ -1,2 +1,13 @@
-{
-}
+[{
+  "id": "964c4e5c-3241-437a-af79-5b3f4c0a3154",
+  "CategoryName": "Men"
+}, {
+  "id": "3b1bd37d-1f30-4403-adf0-f720dee9a460",
+  "CategoryName": "Women"
+}, {
+  "id": "f8442349-df63-4ccd-850f-69b2e9545a28",
+  "CategoryName": "Kids"
+}, {
+  "id": "dd1b0afe-5bf3-4615-9761-4874f23796b3",
+  "CategoryName": "Unisex"
+}]

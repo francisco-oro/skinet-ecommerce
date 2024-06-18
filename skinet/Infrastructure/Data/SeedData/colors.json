@@ -1,0 +1,56 @@
+[
+  {
+    "Id": "1432caed-8e37-4a75-aa74-56b06d5198fe",
+    "ColorName": "Red",
+    "HexCode": "#ff0000",
+    "RgbCode": "255,0,0"
+  },
+  {
+    "Id":  "3dcd19ee-9077-40a1-846e-7a8d83cecfb7",
+    "ColorName": "Green",
+    "HexCode": "#00ff00",
+    "RgbCode": "0,255,0"
+  },
+  {
+    "Id":  "db3da3b6-99d3-4e58-998a-9009c8466f8a",
+    "ColorName": "Blue",
+    "HexCode": "#0000ff",
+    "RgbCode": "0,0,255"
+  },
+  {
+    "Id":  "2167ad47-3515-4537-b4b3-99536d2b003a",
+    "ColorName": "Yellow",
+    "HexCode": "#ffff00",
+    "RgbCode": "255,255,0"
+  },
+  {
+    "Id":  "8fd1c581-1a40-46b4-a154-ec0d79ecd521",
+    "ColorName": "Purple",
+    "HexCode": "#800080",
+    "RgbCode": "128,0,128"
+  },
+  {
+    "Id":  "d24817cf-e37f-4277-8411-2cc3d8fc77ff",
+    "ColorName": "Cyan",
+    "HexCode": "#00ffff",
+    "RgbCode": "0,255,255"
+  },
+  {
+    "Id":  "6ff6ca63-9676-4291-ad82-98bf1c1e73d4",
+    "ColorName": "Magenta",
+    "HexCode": "#ff00ff",
+    "RgbCode": "255,0,255"
+  },
+  {
+    "Id":  "a07da055-523d-4115-9a35-2fe59e4b4810",
+    "ColorName": "White",
+    "HexCode": "#ffffff",
+    "RgbCode": "255,255,255"
+  },
+  {
+    "Id":  "19c4523c-ee78-491e-8b5d-153cce93d7e6",
+    "ColorName": "Black",
+    "HexCode": "#000000",
+    "RgbCode": "0,0,0"
+  }
+]

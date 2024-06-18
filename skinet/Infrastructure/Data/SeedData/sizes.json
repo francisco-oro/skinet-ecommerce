@@ -1,0 +1,22 @@
+[ {
+  "Id": "bd1aabdb-1bc3-4798-8bfd-8bd5e2354d73",
+  "SizeName": "XS"
+},{
+  "Id": "b1d6ba69-c2a5-44c5-8655-0b4495c15aff",
+  "SizeName": "S"
+}, {
+  "Id": "4a890aa6-c2af-43fa-913e-7ad7fdcc44cd",
+  "SizeName": "M"
+}, {
+  "Id": "086731ec-75f0-4a44-ac57-14ccdac1f015",
+  "SizeName": "L"
+}, {
+  "Id": "aca9c1a5-e9bb-401a-a99f-34d238c1d68c",
+  "SizeName": "XL"
+}, {
+  "Id": "bd11a47b-233e-42c4-9522-726be5b43069",
+  "SizeName": "XXL"
+}, {
+  "Id": "71038159-15f6-4167-87d2-99b35c4ffbaa",
+  "SizeName": "3XL"
+}]

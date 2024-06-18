@@ -1,7 +1,7 @@
 namespace Core.Entities;
 
-public class Tag : BaseEntity
+public class Size : BaseEntity
 {
-    public String TagName { get; set; }
+    public string SizeName { get; set; }
     public virtual ICollection<Product> Products { get; set; } = [];
 }

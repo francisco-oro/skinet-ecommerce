@@ -1,18 +1,14 @@
-[
-  {
-    "Id": 1,
-    "Name": "Boards"
-  },
-  {
-    "Id": 2,
-    "Name": "Hats"
-  },
-  {
-    "Id": 3,
-    "Name": "Boots"
-  },
-  {
-    "Id": 4,
-    "Name": "Gloves"
-  }
-]
+
+[{
+  "Id": "d60ed2fc-095b-4de4-a387-7cbd1ded7894",
+  "Name": "Boards"
+}, {
+  "Id": "498845d6-9208-4e25-b45e-57d5eb01d9aa",
+  "Name": "Hats"
+}, {
+  "Id": "e74e75d5-57bf-4472-9431-83310dac850d",
+  "Name": "Boots"
+}, {
+  "Id": "29945dc1-ea8b-43af-b2ed-3600deb5c30b",
+  "Name": "Gloves"
+}]
