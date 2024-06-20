@@ -10,18 +10,29 @@ namespace API.Controllers;
 [Route("api/[controller]/")]
 public class ProductsController: ControllerBase
 {
-    private readonly IProductRepository _productRepository;
+    private readonly IGenericRepository<Product> _productsRepo;
+    private readonly IGenericRepository<ProductBrand> _productBrandRepo;
+    private readonly IGenericRepository<ProductType> _productTypeRepo;
+    private readonly IGenericRepository<Category> _productCategoryRepo;
+    private readonly IGenericRepository<Colors> _productColorRepo;
+    private readonly IGenericRepository<Size> _productSizeRepo;
+    private readonly IGenericRepository<Tag> _productTagRepo;
 
-    public ProductsController(IProductRepository productRepository)
+    public ProductsController(IGenericRepository<Product> productsRepo, IGenericRepository<ProductBrand> productBrandRepo, IGenericRepository<ProductType> productTypeRepo, IGenericRepository<Category> productCategoryRepo, IGenericRepository<Colors> productColorRepo, IGenericRepository<Size> productSizeRepo, IGenericRepository<Tag> productTagRepo)
     {
-        _productRepository = productRepository;
+        _productsRepo = productsRepo;
+        _productBrandRepo = productBrandRepo;
+        _productTypeRepo = productTypeRepo;
+        _productCategoryRepo = productCategoryRepo;
+        _productColorRepo = productColorRepo;
+        _productSizeRepo = productSizeRepo;
+        _productTagRepo = productTagRepo;
     }
-
 
     [HttpGet("[action]")]
     public async  Task<ActionResult<IReadOnlyList<Product>>> GetProducts()
     {
-        var products = await _productRepository.GetProductsAsync();
+        var products = await _productsRepo.ListAllAsync();
         
         return Ok(products); 
     }
@@ -29,42 +40,42 @@ public class ProductsController: ControllerBase
     [HttpGet("[action]/{id}")]
     public async Task<ActionResult<Product>> GetProduct(Guid id)
     {
-        return await _productRepository.GetProductByIdAsync(id);
+        return await _productsRepo.GetByIdAsync(id);
     }
 
     [HttpGet("brands")]
     public async Task<ActionResult<IReadOnlyList<ProductBrand?>>> GetProductBrands()
     {
-        return Ok(await _productRepository.GetProductBrandsAsync());
+        return Ok(await _productBrandRepo.ListAllAsync());
     }
 
     [HttpGet("types")]
     public async Task<ActionResult<IReadOnlyList<ProductType?>>> GetProductTypes()
     {
-        return Ok(await _productRepository.GetProductTypesAsync());
+        return Ok(await _productTypeRepo.ListAllAsync());
     }
 
     [HttpGet("categories")]
     public async Task<ActionResult<IReadOnlyList<Category?>>> GetProductCategories()
     {
-        return Ok(await _productRepository.GetProductBrandsAsync());
+        return Ok(await _productCategoryRepo.ListAllAsync());
     }
 
     [HttpGet("colors")]
     public async Task<ActionResult<IReadOnlyList<Colors?>>> GetProductColors()
     {
-        return Ok(await _productRepository.GetProductColorsAsync());
+        return Ok(await _productColorRepo.ListAllAsync());
     }
 
     [HttpGet("sizes")]
     public async Task<ActionResult<IReadOnlyList<Size?>>> GetProductSizes()
     {
-        return Ok(await _productRepository.GetProductSizesAsync());
+        return Ok(await _productSizeRepo.ListAllAsync());
     }
 
     [HttpGet("tags")]
     public async Task<ActionResult<IReadOnlyList<Tag?>>> GetProductTags()
     {
-        return Ok(await _productRepository.GetProductTagsAsync());
+        return Ok(await _productTagRepo.ListAllAsync());
     }
 }

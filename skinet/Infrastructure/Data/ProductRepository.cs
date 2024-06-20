@@ -15,7 +15,14 @@ public class ProductRepository : IProductRepository
 
     public async Task<Product?> GetProductByIdAsync(Guid id)
     {
-        return await _storeContext.Products.FirstOrDefaultAsync(id);
+        return await _storeContext.Products
+            .Include(p => p.ProductBrand)
+            .Include(p => p.ProductType)
+            .Include(p => p.Colors)
+            .Include(p => p.Sizes)
+            .Include(p => p.Category)
+            .Include(p => p.Tags)
+            .FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public async Task<IReadOnlyList<Product?>> GetProductsAsync()
