@@ -26,6 +26,9 @@ public class MappingProfiles : Profile
                     .MapFrom(s => s.Tags.Select(tag => tag.TagName).ToList()))
             .ForMember(d => d.Sizes,
                 o => o
-                    .MapFrom(s => s.Sizes.Select(size => size.SizeName).ToList()));
+                    .MapFrom(s => s.Sizes.Select(size => size.SizeName).ToList()))
+            .ForMember(d => d.PictureUrl, 
+                o => o
+                    .MapFrom<ProductUrlResolver>());
     }
 }

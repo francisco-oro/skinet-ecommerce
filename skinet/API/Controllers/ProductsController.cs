@@ -9,9 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
-// [ApiController]
-[Route("api/[controller]/")]
-public class ProductsController: ControllerBase
+
+public class ProductsController: BaseApiController
 {
     private readonly IGenericRepository<Product> _productsRepo;
     private readonly IGenericRepository<ProductBrand> _productBrandRepo;
@@ -35,19 +34,18 @@ public class ProductsController: ControllerBase
     }
 
     [HttpGet("[action]")]
-    public async  Task<IReadOnlyList<Product>> GetProducts()
+    public async  Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts()
     {
         var spec = new ProductsWIthTypesAndBrandsSpecification();
         
         var products = await _productsRepo.ListAsync(spec);
-        return products;
+        return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
     }
 
     [HttpGet("[action]/{id}")]
     public async Task<ActionResult<ProductToReturnDto>> GetProduct(Guid id)
     {
         var spec = new ProductsWIthTypesAndBrandsSpecification(id);
-
         var product = await _productsRepo.GetEntityWithSpec(spec);
 
         return _mapper.Map<Product, ProductToReturnDto>(product);
