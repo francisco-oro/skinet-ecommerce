@@ -1,14 +1,16 @@
 using System.Linq.Expressions;
 using Core.Entities;
+using Core.Models;
 
 namespace Core.Specifications;
 
 public class ProductsWIthTypesAndBrandsSpecification : BaseSpecification<Product>
 {
-    public ProductsWIthTypesAndBrandsSpecification(string sort, Guid? brandId, Guid? typeId) : base(x =>
-        (!brandId.HasValue || x.ProductBrandId == brandId) && 
-            (!typeId.HasValue || x.ProductTypeId == typeId)
+    public ProductsWIthTypesAndBrandsSpecification(
+        string sort, ProductFilterParameters filterParameters) : 
+        base(BuildCriteria(filterParameters)
     )
+    
     {
         AddInclude(x => x.ProductType);
         AddInclude(x => x.ProductBrand);
@@ -49,6 +51,16 @@ public class ProductsWIthTypesAndBrandsSpecification : BaseSpecification<Product
                     break;
             }
         }
+    }
+
+    private static Expression<Func<Product, bool>> BuildCriteria(ProductFilterParameters filterParameters)
+    {
+        return x => (!filterParameters.BrandId.HasValue || x.ProductBrandId == brandId) &&   
+                    (!filterParameters.BrandId.HasValue || x.ProductTypeId == typeId) &&
+                    (!filterParameters.CategoryId.HasValue || x.CategoryId == categoryId) &&
+                    (!filterParameters.TagId.HasValue || x.Tags.Any(tag => tag.Id == tagId)) &&
+                    (!filterParameters.ColorId.HasValue || x.Colors.Any(color => color.Id == colorId)) &&
+                    (!filterParameters.SizeId.HasValue || x.Sizes.Any(size => size.Id == sizeId));
     }
 
     public ProductsWIthTypesAndBrandsSpecification(Guid id) : base(x => x.Id == id)
