@@ -1,14 +1,12 @@
 using System.Linq.Expressions;
 using Core.Entities;
-using Core.Models;
 
 namespace Core.Specifications;
 
 public class ProductsWIthTypesAndBrandsSpecification : BaseSpecification<Product>
 {
-    public ProductsWIthTypesAndBrandsSpecification(
-        string sort, ProductFilterParameters filterParameters) : 
-        base(BuildCriteria(filterParameters)
+    public ProductsWIthTypesAndBrandsSpecification(ProductSpecParams productSpecParams) : 
+        base(BuildCriteria(productSpecParams)
     )
     
     {
@@ -18,9 +16,9 @@ public class ProductsWIthTypesAndBrandsSpecification : BaseSpecification<Product
         AddInclude(x => x.Tags);
         AddOrderBy(x => x.Name);
 
-        if (!string.IsNullOrEmpty(sort))
+        if (!string.IsNullOrEmpty(productSpecParams.Sort))
         {
-            switch (sort)       
+            switch (productSpecParams.Sort)       
             {
                 case "priceAsc":
                     AddOrderBy(p => p.Price);
@@ -53,14 +51,14 @@ public class ProductsWIthTypesAndBrandsSpecification : BaseSpecification<Product
         }
     }
 
-    private static Expression<Func<Product, bool>> BuildCriteria(ProductFilterParameters filterParameters)
+    private static Expression<Func<Product, bool>> BuildCriteria(ProductSpecParams productSpecParams)
     {
-        return x => (!filterParameters.BrandId.HasValue || x.ProductBrandId == brandId) &&   
-                    (!filterParameters.BrandId.HasValue || x.ProductTypeId == typeId) &&
-                    (!filterParameters.CategoryId.HasValue || x.CategoryId == categoryId) &&
-                    (!filterParameters.TagId.HasValue || x.Tags.Any(tag => tag.Id == tagId)) &&
-                    (!filterParameters.ColorId.HasValue || x.Colors.Any(color => color.Id == colorId)) &&
-                    (!filterParameters.SizeId.HasValue || x.Sizes.Any(size => size.Id == sizeId));
+        return x => (!productSpecParams.BrandId.HasValue || x.ProductBrandId == productSpecParams.BrandId) &&   
+                    (!productSpecParams.TypeId.HasValue || x.ProductTypeId == productSpecParams.TypeId) &&
+                    (!productSpecParams.CategoryId.HasValue || x.CategoryId == productSpecParams.CategoryId) &&
+                    (!productSpecParams.TagId.HasValue || x.Tags.Any(tag => tag.Id == productSpecParams.TagId)) &&
+                    (!productSpecParams.ColorId.HasValue || x.Colors.Any(color => color.Id == productSpecParams.ColorId)) &&
+                    (!productSpecParams.SizeId.HasValue || x.Sizes.Any(size => size.Id == productSpecParams.SizeId));
     }
 
     public ProductsWIthTypesAndBrandsSpecification(Guid id) : base(x => x.Id == id)
