@@ -18,9 +18,9 @@ public class ProductSpecParams
     public Guid? TagId { get; set; }
     public Guid? ColorId { get; set; }
     public Guid? SizeId { get; set; }
-    private string _search;
+    private string? _search;
 
-    public string Search
+    public string? Search
     {
         get => _search;
         set => _search = value.ToLower();

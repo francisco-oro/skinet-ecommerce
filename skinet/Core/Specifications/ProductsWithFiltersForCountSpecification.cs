@@ -12,7 +12,9 @@ public class ProductsWithFiltersForCountSpecification : BaseSpecification<Produc
     
     private static Expression<Func<Product, bool>> BuildCriteria(ProductSpecParams productSpecParams)
     {
-        return x => (!productSpecParams.BrandId.HasValue || x.ProductBrandId == productSpecParams.BrandId) &&   
+        return x => 
+            (string.IsNullOrEmpty(productSpecParams.Search) || x.Name.ToLower().Contains(productSpecParams.Search)) && 
+            (!productSpecParams.BrandId.HasValue || x.ProductBrandId == productSpecParams.BrandId) &&   
                     (!productSpecParams.TypeId.HasValue || x.ProductTypeId == productSpecParams.TypeId) &&
                     (!productSpecParams.CategoryId.HasValue || x.CategoryId == productSpecParams.CategoryId) &&
                     (!productSpecParams.TagId.HasValue || x.Tags.Any(tag => tag.Id == productSpecParams.TagId)) &&
