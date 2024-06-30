@@ -1,0 +1,31 @@
+<p-megaMenu [model]="items" styleClass="flex shadow-2">
+  <ng-template pTemplate="start">
+    <img ngSrc="../../../assets/images/logo.png" alt="logo" height="40" width="80">
+
+  </ng-template>
+
+  <ng-template pTemplate="item" let-item>
+    <a *ngIf="item.root" pRipple class="flex align-items-center cursor-pointer px-2 py-2 overflow-hidden relative">
+      <i [ngClass]="item.icon"></i>
+      <span class="ml-1"> {{ item.label }} </span>
+      <i class="pi pi-angle-down"></i>
+    </a>
+    <a *ngIf="!item.root && !item.image" class="flex align-items-center p-1 cursor-pointer gap-1 my-1">
+      <span class="inline-flex flex-column gap-1">
+        <span class="font-medium ">{{ item.label }}</span>
+        <span class="white-space-nowrap">{{ item.subtext }}</span>
+      </span>
+    </a>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <div class="flex align-items-center">
+      <a class="relative">
+        <i class="pi pi-shopping-cart text-2xl mx-6 text-dark"></i>
+          <p-tag value="5" class="cart-no" [rounded]="true"/>
+      </a>
+      <p-button label="Login" [rounded]="true" styleClass="py-2 px-3 mx-2"/>
+      <p-button label="Sign Up" [rounded]="true" severity="secondary" styleClass="py-2 px-3 mx-2"/>
+    </div>
+
+  </ng-template>
+</p-megaMenu>
