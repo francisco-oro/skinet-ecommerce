@@ -13,6 +13,10 @@ import {RippleModule} from "primeng/ripple";
 import {TagModule} from "primeng/tag";
 import {MenuBarComponent} from './components/menu-bar/menu-bar.component';
 import {SearchBarComponent} from './components/search-bar/search-bar.component';
+import { AutoCompleteModule} from "primeng/autocomplete";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+import {DropdownModule} from "primeng/dropdown";
 
 @NgModule({
   declarations: [
@@ -32,6 +36,11 @@ import {SearchBarComponent} from './components/search-bar/search-bar.component';
     RippleModule,
     TagModule,
     MenubarModule,
+    AutoCompleteModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    DropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]
