@@ -5,6 +5,7 @@ import {ProductsService} from "../../services/products.service";
 import {ProductType} from "../../models/product-type.interface";
 import {ProductResponseData} from "../../models/ProductResponse";
 import {AutoCompleteCompleteEvent} from "primeng/autocomplete";
+import {filter, tap} from "rxjs";
 
 @Component({
   selector: 'app-search-bar',
@@ -35,10 +36,10 @@ export class SearchBarComponent implements OnInit {
     let query = event.query;
     let productTypeId:string = this.searchBarForm.controls['selectedProductType'].value.id;
 
-    let filtered = this.productsService.getProducts().subscribe(products => {
-
+    let filtered = this.productsService.getProducts(productTypeId).subscribe(
+      products => {
+        this.filteredProducts = products.data;
     });
 
-    this.filteredProducts = filtered;
   }
 }

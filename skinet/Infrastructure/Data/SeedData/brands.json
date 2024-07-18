@@ -1,19 +1,26 @@
-[{
-  "Id": "0f41b366-1688-403f-8c03-46817b3e14f2",
-  "Name": "Angular"
-}, {
-  "Id": "e6653bb0-52f4-4740-bde6-1c73fbb1f250",
-  "Name": "NetCore"
-}, {
-  "Id": "318ddeea-16de-49cd-8d86-4727b216dff1",
-  "Name": "VS Code"
-}, {
-  "Id": "a5d4abf2-e57b-466d-8422-d08508f1e69b",
-  "Name": "React"
-}, {
-  "Id": "84cd34fb-aecf-4cf0-9cc9-afc4b58f9a0c",
-  "Name": "Typescript"
-}, {
-  "Id": "8f31cbb5-44f6-4d41-8752-672a48588331",
-  "Name": "Redis"
-}]
+[
+  {
+    "Id": 1,
+    "Name": "Angular"
+  },
+  {
+    "Id": 2,
+    "Name": "NetCore"
+  },
+  {
+    "Id": 3,
+    "Name": "VS Code"
+  },
+  {
+    "Id": 4,
+    "Name": "React"
+  },
+  {
+    "Id": 5,
+    "Name": "Typescript"
+  },
+  {
+    "Id": 6,
+    "Name": "Redis"
+  }
+]

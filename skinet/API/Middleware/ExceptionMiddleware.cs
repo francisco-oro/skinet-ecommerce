@@ -1,43 +1,43 @@
+using System;
 using System.Net;
 using System.Text.Json;
+using System.Threading.Tasks;
 using API.Errors;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-namespace API.Middleware;
-
-public class ExceptionMiddleware
+namespace API.Middleware
 {
-    private RequestDelegate _next;
-    private ILogger<ExceptionMiddleware> _logger;
-    private IHostEnvironment _env;
-
-    public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger, IHostEnvironment env)
+    public class ExceptionMiddleware
     {
-        _next = next;
-        _logger = logger;
-        _env = env;
-    }
+        private readonly RequestDelegate _next;
+        private readonly ILogger<ExceptionMiddleware> _logger;
+        private readonly IHostEnvironment _env;
 
-    public async Task InvokeAsync(HttpContext context)
-    {
-        try
+        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger, IHostEnvironment env)
         {
-            await _next(context);
+            _next = next;
+            _logger = logger;
+            _env = env;
         }
-        catch (Exception e)
+
+        public async Task InvokeAsync(HttpContext context)
         {
-            _logger.LogError(e, e.Message);
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
-            var response = _env.IsDevelopment()
-                ? new ApiException((int)HttpStatusCode.InternalServerError, e.Message,
-                    e.StackTrace)
+            try { await _next(context); }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                context.Response.ContentType = "application/json";
+                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                var response = _env.IsDevelopment()
+                ? new ApiException((int)HttpStatusCode.InternalServerError, ex.Message, ex.StackTrace.ToString())
                 : new ApiException((int)HttpStatusCode.InternalServerError);
+                var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+                var json = JsonSerializer.Serialize(response, options);
 
-            var options = new JsonSerializerOptions() {PropertyNamingPolicy = JsonNamingPolicy.CamelCase};
-            var json = JsonSerializer.Serialize(response, options);
-
-            await context.Response.WriteAsync(json);
+                await context.Response.WriteAsync(json);
+            }
         }
     }
 }

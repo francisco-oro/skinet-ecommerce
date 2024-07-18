@@ -1,49 +1,33 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {NavBarComponent} from './components/nav-bar/nav-bar.component';
-import {MegaMenuModule} from "primeng/megamenu";
-import {MenubarModule} from "primeng/menubar";
-import {NgOptimizedImage} from "@angular/common";
-import {ButtonModule} from "primeng/button";
-import {RippleModule} from "primeng/ripple";
-import {TagModule} from "primeng/tag";
-import {MenuBarComponent} from './components/menu-bar/menu-bar.component';
-import {SearchBarComponent} from './components/search-bar/search-bar.component';
-import { AutoCompleteModule} from "primeng/autocomplete";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
-import {DropdownModule} from "primeng/dropdown";
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreModule } from './core/core.module';
+import { ShopModule } from './shop/shop.module';
+import { HomeModule } from './home/home.module';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { NgxSpinnerModule} from 'ngx-spinner';
+import { LoadingInterceptor } from './core/interceptors/loading.interceptors';
+
 
 @NgModule({
   declarations: [
-    AppComponent,
-    NavBarComponent,
-    MenuBarComponent,
-    SearchBarComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     AppRoutingModule,
-    MegaMenuModule,
-    MenubarModule,
-    NgOptimizedImage,
-    ButtonModule,
-    RippleModule,
-    TagModule,
-    MenubarModule,
-    AutoCompleteModule,
-    FormsModule,
+    BrowserAnimationsModule,
     HttpClientModule,
-    ReactiveFormsModule,
-    DropdownModule
+    CoreModule,
+    HomeModule,
+    NgxSpinnerModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }

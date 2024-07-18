@@ -11,7 +11,7 @@ export class ProductsService {
 
   constructor(private http: HttpClient) { }
 
-  public getProducts(): Observable<ProductResponse> {
-    return this.http.get<ProductResponse>(baseUrl);
+  public getProducts(productTypeId?: string): Observable<ProductResponse> {
+    return this.http.get<ProductResponse>(`${baseUrl}?TypeId=${productTypeId}`);
   }
 }

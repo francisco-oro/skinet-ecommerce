@@ -1,75 +1,59 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text.Json;
-using System.Collections;
+using System.Threading.Tasks;
 using Core.Entities;
+using Microsoft.Extensions.Logging;
 
-namespace Infrastructure.Data;
-
-public class StoreContextSeed
+namespace Infrastructure.Data
 {
-    public static async Task SeedASync(StoreContext context)
+    public class StoreContextSeed
     {
-        if (!context.ProductBrands.Any())
-        {
-            var brandsData = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/brands.json");
-            var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
-            if (brands != null) context.ProductBrands.AddRange(brands);
-            await context.SaveChangesAsync();
-        }
-        if (!context.Categories.Any())
-        {
-            var categoriesData = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/categories.json");
-            var categories = JsonSerializer.Deserialize<List<Category>>(categoriesData);
-            if (categories != null) context.Categories.AddRange(categories);
-            await context.SaveChangesAsync();
-        }
-        if (!context.Colors.Any())
-        {
-            var colorsData = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/colors.json");
-            var colors = JsonSerializer.Deserialize<List<Colors>>(colorsData);
-            if (colors != null) context.Colors.AddRange(colors);
-            await context.SaveChangesAsync();
-        }
-        if (!context.Sizes.Any())
-        {
-            var sizesData = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/sizes.json");
-            var sizes = JsonSerializer.Deserialize<List<Size>>(sizesData);
-            if (sizes != null) context.Sizes.AddRange(sizes);
-            await context.SaveChangesAsync();
-        }
-        if (!context.ProductTypes.Any())
-        {
-            var typesData = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/types.json");
-            var productTypes = JsonSerializer.Deserialize<List<ProductType>>(typesData);
-            if (productTypes != null) context.ProductTypes.AddRange(productTypes);
-            await context.SaveChangesAsync();
-        }
 
-        if (!context.Products.Any())
+        public static async Task SeedAsync(StoreContext context, ILoggerFactory loggerFactory)
         {
-            var productsData = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/products.json");
-            var products = JsonSerializer.Deserialize<List<Product>>(productsData);
-            if (products != null)
+            try
             {
-                foreach (var product in products)
+                if (!context.ProductBrands.Any())
                 {
-                    product.Id = Guid.NewGuid();
+                    var brandsData = File.ReadAllText("../Infrastructure/Data/SeedData/brands.json");
+                    var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
+                    foreach (var item in brands)
+                    {
+                        context.ProductBrands.Add(item);
+                    }
+                    await context.SaveChangesAsync();
                 }
-                context.Products.AddRange(products);
 
+                if (!context.ProductTypes.Any())
+                {
+                    var typesData = File.ReadAllText("../Infrastructure/Data/SeedData/types.json");
+                    var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
+                    foreach (var item in types)
+                    {
+                        context.ProductTypes.Add(item);
+                    }
+                    await context.SaveChangesAsync();
+                }
+
+                if (!context.Products.Any())
+                {
+                    var productsData = File.ReadAllText("../Infrastructure/Data/SeedData/products.json");
+                    var products = JsonSerializer.Deserialize<List<Product>>(productsData);
+                    foreach (var item in products)
+                    {
+                        context.Products.Add(item);
+                    }
+                    await context.SaveChangesAsync();
+                }
             }
-            await context.SaveChangesAsync();
-        }
-        if (!context.Tags.Any())
-        {
-            var tagsData = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/tags.json");
-            var tags = JsonSerializer.Deserialize<List<Tag>>(tagsData);
-            if (tags != null) context.Tags.AddRange(tags);
-            await context.SaveChangesAsync();
-        }
-
-        if (context.ChangeTracker.HasChanges())
-        {
-            await context.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                var logger = loggerFactory.CreateLogger<StoreContextSeed>();
+                logger.LogError(ex.Message);
+            }
         }
     }
 }

@@ -1,25 +1,24 @@
-using API.DTO;
+using API.Dtos;
 using AutoMapper;
 using Core.Entities;
+using Microsoft.Extensions.Configuration;
 
-namespace API.Helpers;
-
-public class ProductUrlResolver : IValueResolver<Product, ProductToReturnDto, string>
+namespace API.Helpers
 {
-    private readonly IConfiguration _configuration;
-
-    public ProductUrlResolver(IConfiguration configuration)
+    public class ProductUrlResolver : IValueResolver<Product, ProductToReturnDto, string>
     {
-        _configuration = configuration;
-    }
-    
-    public string Resolve(Product source, ProductToReturnDto destination, string destMember, ResolutionContext context)
-    {
-        if (!string.IsNullOrEmpty(source.PictureUrl))
+        private readonly IConfiguration _config;
+        public ProductUrlResolver(IConfiguration configuration)
         {
-            return _configuration["ApiUrl"] + source.PictureUrl;
-        }
+            _config = configuration;
 
-        return null;
+        }
+        public string Resolve(Product source, ProductToReturnDto destination, string destMember, ResolutionContext context)
+        {
+            if(!string.IsNullOrEmpty(source.PictureUrl))
+            return _config["ApiUrl"] + source.PictureUrl;
+
+            return null;
+        }
     }
 }

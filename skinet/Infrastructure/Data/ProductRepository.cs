@@ -1,75 +1,44 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Data;
-
-public class ProductRepository : IProductRepository
+namespace Infrastructure.Data
 {
-    private readonly StoreContext _storeContext;
-
-    public ProductRepository(StoreContext storeContext)
+    public class ProductRepository : IProductRepository
     {
-        _storeContext = storeContext;
-    }
+        private readonly StoreContext _context;
+        public ProductRepository(StoreContext context)
+        {
+            _context = context;
 
-    public async Task<Product?> GetProductByIdAsync(Guid id)
-    {
-        return await _storeContext.Products
-            .Include(p => p.ProductBrand)
+        }
+
+        public async Task<IReadOnlyList<ProductBrand>> GetProductBrandsAsync()
+        {
+            return await _context.ProductBrands.ToListAsync();
+        }
+
+        public async Task<Product> GetProductByIdAsync(int id)
+        {
+            return await _context.Products
             .Include(p => p.ProductType)
-            .Include(p => p.Colors)
-            .Include(p => p.Sizes)
-            .Include(p => p.Category)
-            .Include(p => p.Tags)
+            .Include(p => p.ProductBrand)
             .FirstOrDefaultAsync(p => p.Id == id);
-    }
+        }
 
-    public async Task<IReadOnlyList<Product?>> GetProductsAsync()
-    {
-        return await _storeContext.Products
-            .Include(p => p.ProductBrand)
+        public async Task<IReadOnlyList<Product>> GetProductsAsync()
+        {
+            return await _context.Products
             .Include(p => p.ProductType)
-            .Include(p => p.Colors)
-            .Include(p => p.Sizes)
-            .Include(p => p.Category)
-            .Include(p => p.Tags)
+            .Include(p => p.ProductBrand)
             .ToListAsync();
-    }
+        }
 
-    public async Task<IReadOnlyList<ProductBrand?>> GetProductBrandsAsync()
-    {
-        return await _storeContext.ProductBrands.ToListAsync();
-    }
-
-    public async Task<IReadOnlyList<ProductType>> GetProductTypesAsync()
-    {
-        return await _storeContext.ProductTypes.ToListAsync();
-    }
-
-    public async Task<IReadOnlyList<Category>> GetProductCategoriesAsync()
-    {
-        return await _storeContext.Categories.ToListAsync();
-    }
-
-    public async Task<IReadOnlyList<Tag>> GetProductTagsAsync()
-    {
-        return await _storeContext.Tags
-            .Include(t => t.Products)
-            .ToListAsync();
-    }
-
-    public async Task<IReadOnlyList<Size>> GetProductSizesAsync()
-    {
-        return await _storeContext.Sizes
-            .Include(t => t.Products)
-            .ToListAsync();
-    }
-
-    public async Task<IReadOnlyList<Colors>> GetProductColorsAsync()
-    {
-        return await _storeContext.Colors
-            .Include(t => t.Products)
-            .ToListAsync();
+        public async Task<IReadOnlyList<ProductType>> GetProductTypesAsync()
+        {
+            return await _context.ProductTypes.ToListAsync();
+        }
     }
 }
